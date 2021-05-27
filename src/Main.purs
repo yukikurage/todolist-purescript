@@ -10,7 +10,7 @@ import Halogen.HTML as HH
 import Halogen.HTML.Events as HE
 import Halogen.HTML.Properties as HP
 import Halogen.VDom.Driver (runUI)
-import Prelude (Unit, bind, map, pure, show, unit, ($), (-), (<<<), (=<<))
+import Prelude (Unit, bind, map, pure, unit, ($), (-), (<<<), (=<<))
 
 main :: Effect Unit
 main =
@@ -69,8 +69,7 @@ renderTask :: forall m. { itr :: Int, val :: Task } -> H.ComponentHTML Action ()
 renderTask taskItr =
   HH.div
     [ HP.class_ (HH.ClassName "task") ]
-    $ HH.text
-        (show taskItr.val.name)
+    $ HH.text taskItr.val.name
     : if taskItr.val.isFinished then
         [ HH.button
             [ HE.onClick \_ -> DeleteTask taskItr.itr ]
@@ -83,11 +82,7 @@ renderTask taskItr =
         ]
 
 withItr :: forall a. Array a -> Array { itr :: Int, val :: a }
-withItr xs = zipWith f (0 .. (len - 1)) xs
-  where
-  len = length xs
-
-  f itr val = { itr: itr, val: val }
+withItr xs = zipWith { itr: _, val: _ } (0 .. (length xs - 1)) xs
 
 handleAction :: forall output m. Action -> H.HalogenM State Action () output m Unit
 handleAction = case _ of
