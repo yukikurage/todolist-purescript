@@ -12,11 +12,14 @@ to generate this file without the comments in this block.
 -}
 { name = "my-project"
 , dependencies =
-  [ "assert"
+  [ "arrays"
+  , "assert"
   , "console"
   , "effect"
   , "foldable-traversable"
+  , "halogen"
   , "lists"
+  , "maybe"
   , "prelude"
   , "psci-support"
   ]

@@ -1,8 +1,7 @@
 module Test.Main where
 
 import Prelude
-import Euler (answer)
-import Test.Assert (assert)
+import Effect (Effect)
 
-main = do
-  assert (answer == 233168)
+main :: Effect Unit
+main = pure unit
