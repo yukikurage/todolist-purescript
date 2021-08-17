@@ -1,7 +1,7 @@
 module Main where
 
 import Data.Functor
-import Data.Array (cons, deleteAt, length, modifyAt, zipWith, (..), (:))
+import Data.Array (cons, deleteAt, length, modifyAt, zipWith, (..))
 import Data.Maybe (Maybe, fromMaybe)
 import Effect (Effect)
 import Halogen as H
@@ -54,12 +54,10 @@ render state =
     [ HH.div_ [ HH.text "タスク一覧" ]
     , HH.div_ <<< map (renderTask) <<< withItr <<< fromMaybe [] $ state.tasks
     , HH.div_
-        [ HH.label_
-            [ HH.text "タスク名"
-            , HH.input
-                [ HP.value state.newTaskName
-                , HE.onValueInput \str -> SetTaskName str
-                ]
+        [ HH.text "タスク名"
+        , HH.input
+            [ HP.value state.newTaskName
+            , HE.onValueInput \str -> SetTaskName str
             ]
         , HH.button [ HE.onClick \_ -> AddTask ] [ HH.text "追加" ]
         ]
@@ -69,17 +67,16 @@ renderTask :: forall m. { itr :: Int, val :: Task } -> H.ComponentHTML Action ()
 renderTask taskItr =
   HH.div
     [ HP.class_ (HH.ClassName "task") ]
-    $ HH.text taskItr.val.name
-    : if taskItr.val.isFinished then
-        [ HH.button
-            [ HE.onClick \_ -> DeleteTask taskItr.itr ]
-            [ HH.text "削除" ]
-        ]
+    [ HH.text taskItr.val.name
+    , if taskItr.val.isFinished then
+        HH.button
+          [ HE.onClick \_ -> DeleteTask taskItr.itr ]
+          [ HH.text "削除" ]
       else
-        [ HH.button
-            [ HE.onClick \_ -> FinishTask taskItr.itr ]
-            [ HH.text "完了" ]
-        ]
+        HH.button
+          [ HE.onClick \_ -> FinishTask taskItr.itr ]
+          [ HH.text "完了" ]
+    ]
 
 withItr :: forall a. Array a -> Array { itr :: Int, val :: a }
 withItr xs = zipWith { itr: _, val: _ } (0 .. (length xs - 1)) xs

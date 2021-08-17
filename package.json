@@ -1,5 +1,27 @@
 {
+  "scripts": {
+    "build": "spago build --watch --clear-screen",
+    "bundle": "spago bundle-app && powershell.exe /c start $(wslpath -w index.html)"
+  },
   "dependencies": {
     "purty": "^7.0.0"
-  }
+  },
+  "name": "todolist-purescript",
+  "version": "1.0.0",
+  "description": "todolist powered by purescript",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yukikurage/todolist-purescript.git"
+  },
+  "author": "yukikurage",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yukikurage/todolist-purescript/issues"
+  },
+  "homepage": "https://github.com/yukikurage/todolist-purescript#readme"
 }
